@@ -15,17 +15,21 @@ public class Pipeline : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            Debug.DrawLine(lastMousePos, (Camera.main.ScreenToWorldPoint(Input.mousePosition)));
+            Vector2 mouseCurrentPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, (Camera.main.ScreenToWorldPoint(Input.mousePosition)).y);
+            Debug.DrawLine(lastMousePos, mouseCurrentPos);
 
             if (Time.time > timer)
             {
                 timer = Time.time + 0.1f;
+                total += ((mouseCurrentPos - lastMousePos).magnitude);
                 lastMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
         }
-        else
+        if (Input.GetMouseButtonUp(0))
         {
-
+            Debug.Log("The total length of the pipeline was " + total + " units.");
+            total = 0;
+            lastMousePos = Vector2.zero;
         }
     }
 }
