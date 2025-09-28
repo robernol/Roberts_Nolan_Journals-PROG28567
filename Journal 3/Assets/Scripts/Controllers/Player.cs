@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         PlayerMovement();
     }
 
-    void PlayerMovement() { 
+    public void PlayerMovement() { 
         pos = transform.position;
 
         if (Input.GetKey(KeyCode.W))
