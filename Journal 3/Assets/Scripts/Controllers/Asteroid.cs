@@ -23,13 +23,18 @@ public class Asteroid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AsteroidMovement();
+    }
+
+    public void AsteroidMovement()
+    {
         if (arrived)
         {
             next = new Vector3(this.transform.position.x + Random.Range(-maxFloatDistance, maxFloatDistance), this.transform.position.y + (Random.Range(-maxFloatDistance, maxFloatDistance)));
             arrived = false;
         }
 
-        if ( (next.x - this.transform.position.x <= arrivalDistance) && (next.y - this.transform.position.y <= arrivalDistance))
+        if ((next.x - this.transform.position.x <= arrivalDistance) && (next.y - this.transform.position.y <= arrivalDistance))
         {
             arrived = true;
         }
