@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                effMaxSpeed.y = maxSpeed * ((deccTimer.x - Time.time) / deccTime);
+                effMaxSpeed.y = maxSpeed * ((deccTimer.y - Time.time) / deccTime);
             }
         }
         else
