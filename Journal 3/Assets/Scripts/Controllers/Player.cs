@@ -9,16 +9,18 @@ public class Player : MonoBehaviour
     public GameObject bombPrefab;
     public Transform bombsTransform;
     Vector3 acc, vel, pos;
-    public Vector2 effMaxSpeed, accTimer;
+    public Vector2 effMaxSpeed, accTimer, deccTimer;
 
     float maxSpeed = 0.2f;
     float accTime = 2;
+    float deccTime;
 
     private void Start()
     {
         acc = Vector3.zero;
         accTimer.x = Time.time;
         accTimer.y = Time.time;
+        deccTime = accTime / 2;
     }
 
     void Update()
@@ -68,29 +70,49 @@ public class Player : MonoBehaviour
         if (! (((Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.D)))))
         {
             accTimer.x = Time.time + accTime;
+            if (Time.time >= deccTimer.x)
+            {
+                effMaxSpeed.x = 0;
+                acc.x = 0;
+            }
+            else
+            {
+                effMaxSpeed.x = maxSpeed * ((deccTimer.x - Time.time) / deccTime);
+            }
         }
         else
         {
+            deccTimer.x = Time.time + deccTime;
             if (Time.time >= accTimer.x)
             {
                 effMaxSpeed.x = maxSpeed;
-                Debug.Log("MAX X SPEED!");
             }
             else
             {
                 effMaxSpeed.x = maxSpeed * (accTime - (accTimer.x - Time.time) / accTime);
             }
         }
+
+
         if (!(((Input.GetKey(KeyCode.W)) || (Input.GetKey(KeyCode.S)))))
         {
             accTimer.y = Time.time + accTime;
+            if (Time.time >= deccTimer.y)
+            {
+                effMaxSpeed.y = 0;
+                acc.y = 0;
+            }
+            else
+            {
+                effMaxSpeed.y = maxSpeed * ((deccTimer.x - Time.time) / deccTime);
+            }
         }
         else
         {
+            deccTimer.y = Time.time + deccTime;
             if (Time.time >= accTimer.y)
             {
                 effMaxSpeed.y = maxSpeed;
-                Debug.Log("MAX Y SPEED!");
             }
             else
             {
