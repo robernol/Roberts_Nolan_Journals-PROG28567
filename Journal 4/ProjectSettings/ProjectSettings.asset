@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 82fbcdb91008fd546ad639819940767a
+  productGUID: 6116c9bd7f309e84da491ba166972847
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Journal 3
+  productName: Journal 4
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -688,14 +688,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Journal 3
+  metroPackageName: Journal 4
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Journal 3
+  metroApplicationDescription: Journal 4
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -766,10 +766,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 2e0a7cd3-cdaa-4608-ba6f-350abe39514f
+  cloudProjectId: ec493869-caca-4d75-b9ac-b0db974c2869
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Journal 3 2025-09-28_11-42-15
+  projectName: Journal 4
   organizationId: ominifer
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
