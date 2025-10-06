@@ -8,17 +8,25 @@ public class Player : MonoBehaviour
     public List<Vector3> radarPoints;
     public Transform enemyTransform;
     public GameObject powerupPrefab;
+    public int health;
+
+    private void Start()
+    {
+        health = 100;
+    }
 
     void Update()
     {
         PlayerMovement();
 
-        EnemyRadar(2, 9);
+        EnemyRadar(2, 20);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SpawnPowerups(5, 5);
+            SpawnPowerups(5, 50);
         }
+
+        Debug.Log(health);
     }
 
     public void EnemyRadar (float radius, int circlePoints)
