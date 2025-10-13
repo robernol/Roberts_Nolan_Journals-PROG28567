@@ -12,7 +12,7 @@ public class Moon : MonoBehaviour
     {
         rotAngle = Mathf.Atan2(planetTransform.position.y - transform.position.y, planetTransform.position.x - transform.position.x);
         orbitalSpeed = 0.25f;
-        orbitalDistance = 4;
+        orbitalDistance = 10;
     }
 
     void Update()

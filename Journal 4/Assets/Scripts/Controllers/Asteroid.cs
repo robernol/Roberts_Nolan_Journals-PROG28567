@@ -1,20 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    public float moveSpeed;
-    public float arrivalDistance;
-    public float maxFloatDistance;
-
-    // Start is called before the first frame update
+    public GameObject bat;
+    public GameObject ship;
+    Vector3 vel;
     void Start()
     {
+        vel = Vector3.zero;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if ((transform.position - ship.transform.position).magnitude < 0.4)
+        {
+            Destroy(ship);
+
+        }
+
+        Vector3 temp = transform.position + vel;
+        transform.position = temp;
+
+        vel *= 0.9f;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        vel = (bat.transform.position - ship.transform.position).normalized/10;
     }
 }

@@ -19,11 +19,11 @@ public class Player : MonoBehaviour
     {
         PlayerMovement();
 
-        EnemyRadar(2, 20);
+        EnemyRadar(1, 3);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SpawnPowerups(5, 50);
+            SpawnPowerups(1, 50);
         }
 
         Debug.Log(health);
