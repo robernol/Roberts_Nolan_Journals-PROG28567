@@ -13,6 +13,7 @@ public class Bat : MonoBehaviour
     {
         Vector3 mouse = Camera.main.ScreenToWorldPoint( Input.mousePosition ); 
         mouse.z = 0;
+        transform.position = ship.position;
 
         float rotAngle = Mathf.Atan2(mouse.y - ship.position.y, mouse.x - ship.position.x);
         transform.eulerAngles = new Vector3( 0, 0, (rotAngle * Mathf.Rad2Deg) -90 );

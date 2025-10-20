@@ -9,10 +9,12 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject powerupPrefab;
     public int health;
+    public Vector3 vel, acc;
 
     private void Start()
     {
         health = 100;
+        vel = Vector3.zero;
     }
 
     void Update()
@@ -62,27 +64,51 @@ public class Player : MonoBehaviour
 
     void PlayerMovement()
     {
-        Vector3 temp = transform.position;
-        Vector3 vel = Vector3.zero;
+        acc = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
         {
-            vel.y += 0.01f;
+            acc.y += 0.001f;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            vel.y -= 0.01f;
+            acc.y -= 0.001f;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            vel.x -= 0.01f;
+            acc.x -= 0.001f;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            vel.x += 0.01f;
+            acc.x += 0.001f;
         }
 
+
+
+        if (Mathf.Abs(acc.x + vel.x) > 0.05f)
+        {
+            vel.x += 0.05f;
+        }
+        else
+        {
+            vel.x += acc.x;
+        }
+        if (Mathf.Abs(acc.y + vel.y) > 0.05f)
+        {
+            vel.y += 0.05f;
+        }
+        else
+        {
+            vel.y += acc.y;
+        }
+
+        if (Mathf.Abs(transform.position.x + vel.x) > 10.75f) { vel.x = 0; }
+        if (Mathf.Abs(transform.position.y + vel.y) > 5f) { vel.y = 0; }
+
+        
+        Vector3 temp = transform.position;
         temp += vel;
         transform.position = temp;
+        vel *= 0.97f;
     }
 }
