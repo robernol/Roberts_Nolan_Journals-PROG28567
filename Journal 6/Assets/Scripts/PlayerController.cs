@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,8 +10,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public KeyCode lastPressed;
-    public bool moving, grounded;
-    Vector2 acc, vel;
+    public bool moving, grounded, jumpInit;
+    public Vector2 acc, vel;
 
     void Start()
     {
@@ -41,6 +42,15 @@ public class PlayerController : MonoBehaviour
         }
         GetFacingDirection();
 
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        {
+            jumpInit = true;
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
         Vector2 playerInput = new Vector2();
 
         if (Input.GetKey(KeyCode.A))
@@ -51,8 +61,13 @@ public class PlayerController : MonoBehaviour
         {
             playerInput.x += 1;
         }
-
+        if (jumpInit)
+        {
+            playerInput.y = 1;
+            jumpInit = false;
+        }
         MovementUpdate(playerInput);
+        
 
     }
 
@@ -60,13 +75,42 @@ public class PlayerController : MonoBehaviour
     {
         acc.x += playerInput.x / 10 * Time.deltaTime;
 
+        if (playerInput.y > 0)
+        {
+            acc.y = 0.07f;
+            grounded = false;
+        }
+
         vel += acc;
 
-        vel *= 0.9f;
-        acc *= 0.9f;
+        vel.x *= 0.9f;
+        acc.x *= 0.9f;
+        acc.y *= 0.9f;
+
+        if (!IsWalking())
+        {
+            vel.x *= 0.9f;
+            acc.x *= 0.9f;
+        }
+
+        if (!grounded)
+        {
+            acc.y -= 0.005f;
+        }
+        else
+        {
+            vel.y = 0;
+            acc.y = 0;
+        }
+
+        if (vel.y < -0.5f)
+        {
+            vel.y = -0.5f;
+        }
 
         Vector3 temp = transform.position;
         temp.x += vel.x;
+        temp.y += vel.y;
         transform.position = temp;
     }
 
@@ -98,7 +142,33 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        grounded = true;
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            if ((collision.GetContact(i).point.y < transform.position.y) && (collision.GetContact(i).point.x <= transform.position.x + 0.5f) && (collision.GetContact(i).point.x >= transform.position.x - 0.5f))
+            {
+                grounded = true;
+                vel.y = 0;
+                acc.y = 0;
+            }
+            else if ((collision.GetContact(i).point.y > transform.position.y) && (collision.GetContact(i).point.x <= transform.position.x + 0.5f) && (collision.GetContact(i).point.x >= transform.position.x - 0.5f))
+            {
+                vel.y = 0;
+                acc.y = 0;
+            }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            if ((collision.GetContact(i).point.y < transform.position.y) && (collision.GetContact(i).point.x <= transform.position.x + 0.5f) && (collision.GetContact(i).point.x >= transform.position.x - 0.5f))
+            {
+                grounded = true;
+                vel.y = 0;
+                acc.y = 0;
+            }
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
