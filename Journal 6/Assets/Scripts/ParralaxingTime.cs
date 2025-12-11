@@ -14,8 +14,8 @@ public class ParralaxingTime : MonoBehaviour
     {
         pos = player.transform.position.x;
         pos -= basePos;
-        ScreenSlider(front, 0.1f, 1);
-        ScreenSlider(middle, 0.3f, 2);
+        ScreenSlider(front, 0.6f, 1);
+        ScreenSlider(middle, 0.8f, 2);
     }
 
     private void ScreenSlider(GameObject screen, float modifier, int z)

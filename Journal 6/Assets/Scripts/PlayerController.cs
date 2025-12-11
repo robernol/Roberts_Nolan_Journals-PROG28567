@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,12 +11,19 @@ public class PlayerController : MonoBehaviour
     }
 
     public KeyCode lastPressed;
-    public bool moving, grounded, jumpInit;
+    public bool moving, grounded, jumpInit, balling, dash;
+    public GameObject blueDirt;
     public Vector2 acc, vel;
+    public Vector3 dashVect;
+    public int dashCount;
+    public float dashTime, dashAngle;
 
     void Start()
     {
         lastPressed = KeyCode.None;
+        balling = false;
+        dash = false;
+        dashCount = 0;
     }
 
     void Update()
@@ -23,7 +31,39 @@ public class PlayerController : MonoBehaviour
         // The input from the player needs to be determined and
         // then passed in the to the MovementUpdate which should
         // manage the actual movement of the character.
-            
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!balling)
+            {
+                GetComponent<Rigidbody2D>().gravityScale = 1;
+                balling = true;
+            }
+            else
+            {
+                transform.position = (new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z));
+                GetComponent<Rigidbody2D>().gravityScale = 0;
+                balling = false;
+                transform.eulerAngles = Vector3.zero;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0) && (!dash))
+        {
+            dash = true;
+            dashVect = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+            dashVect.z = 0;
+            dashTime = Time.time + 0.5f;
+            dashAngle = Mathf.Atan2(dashVect.y, dashVect.x) * Mathf.Rad2Deg;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = Vector3.zero;
+        }
+
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             lastPressed = KeyCode.A;
@@ -51,23 +91,69 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 playerInput = new Vector2();
+        if (!balling && !dash)
+        {
+            
+            Vector2 playerInput = new Vector2();
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            playerInput.x -= 1;
+            if (Input.GetKey(KeyCode.A))
+            {
+                playerInput.x -= 1;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                playerInput.x += 1;
+            }
+            if (jumpInit)
+            {
+                playerInput.y = 1;
+                jumpInit = false;
+            }
+            MovementUpdate(playerInput);
+
         }
-        if (Input.GetKey(KeyCode.D))
+
+        if (balling)
         {
-            playerInput.x += 1;
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                Vector3 temp = transform.eulerAngles;
+                temp.z -= 3;
+                transform.eulerAngles = temp;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Vector3 temp = transform.eulerAngles;
+                temp.z += 3;
+                transform.eulerAngles = temp;
+            }
+            Vector3 mov = transform.position;
+            mov.x += vel.x;
+            mov.y += vel.y;
+            transform.position = mov;
+            vel *= 0.99f;
         }
-        if (jumpInit)
+
+        if (dash)
         {
-            playerInput.y = 1;
-            jumpInit = false;
+            if (!balling) { transform.eulerAngles = (new Vector3(0, 0, dashAngle)); }
+            Vector3 tem = transform.position;
+            tem += (dashVect.normalized * 0.4f);
+            transform.position = tem;
+
+            blueDirt.GetComponent<TilemapCollider2D>().enabled = false;
+
+            if (dashTime < Time.time)
+            {
+                dash = false;
+                transform.eulerAngles = Vector3.zero;
+            }
         }
-        MovementUpdate(playerInput);
-        
+        else
+        {
+            blueDirt.GetComponent<TilemapCollider2D>().enabled = true;
+        }
 
     }
 
@@ -154,6 +240,21 @@ public class PlayerController : MonoBehaviour
             {
                 vel.y = 0;
                 acc.y = 0;
+            }
+        }
+
+        if (dash)
+        {
+            if (dashCount == 1)
+            {
+                dashCount = 0;
+                dash = false;
+                transform.eulerAngles = Vector3.zero;
+            }
+            else
+            {
+                dashVect *= -1;
+                dashCount++;
             }
         }
     }
