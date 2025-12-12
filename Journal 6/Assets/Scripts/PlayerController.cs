@@ -11,11 +11,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public KeyCode lastPressed;
-    public bool moving, grounded, jumpInit, balling, dash;
+    public bool moving, grounded, jumpInit, balling, dash, doubleJump;
     public GameObject blueDirt;
     public Vector2 acc, vel;
     public Vector3 dashVect;
-    public int dashCount;
     public float dashTime, dashAngle;
 
     void Start()
@@ -23,7 +22,7 @@ public class PlayerController : MonoBehaviour
         lastPressed = KeyCode.None;
         balling = false;
         dash = false;
-        dashCount = 0;
+        doubleJump = true;
     }
 
     void Update()
@@ -31,6 +30,11 @@ public class PlayerController : MonoBehaviour
         // The input from the player needs to be determined and
         // then passed in the to the MovementUpdate which should
         // manage the actual movement of the character.
+
+        if (grounded)
+        {
+            doubleJump = true;
+        }
         
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -85,6 +89,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             jumpInit = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && doubleJump)
+        {
+            jumpInit = true;
+            doubleJump = false;
         }
 
     }
@@ -164,6 +173,10 @@ public class PlayerController : MonoBehaviour
         if (playerInput.y > 0)
         {
             acc.y = 0.07f;
+            if (!grounded)
+            {
+                vel.y = 0;
+            }
             grounded = false;
         }
 
@@ -245,17 +258,9 @@ public class PlayerController : MonoBehaviour
 
         if (dash)
         {
-            if (dashCount == 1)
-            {
-                dashCount = 0;
-                dash = false;
-                transform.eulerAngles = Vector3.zero;
-            }
-            else
-            {
-                dashVect *= -1;
-                dashCount++;
-            }
+            dash = false;
+            transform.eulerAngles = Vector3.zero;
+            grounded = true;
         }
     }
 

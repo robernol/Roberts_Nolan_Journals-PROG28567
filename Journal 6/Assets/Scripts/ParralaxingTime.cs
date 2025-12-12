@@ -10,7 +10,7 @@ public class ParralaxingTime : MonoBehaviour
         
     }
 
-    void Update()
+    void FixedUpdate()
     {
         pos = player.transform.position.x;
         pos -= basePos;

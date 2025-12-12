@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5db3268d7ce402440ba1e3d73555293c
+guid: 35da3c218491f0a40bb4e3f26b04e035
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7919386123332049619
-    second: far_0
+      213: -3795140238903581946
+    second: Ball Dog_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,7 +100,7 @@ TextureImporter:
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -113,7 +113,7 @@ TextureImporter:
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: far_0
+      name: Ball Dog_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 0
-        width: 176
-        height: 240
+        width: 30
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d25a2af8740b81290800000000000000
-      internalID: -7919386123332049619
+      spriteID: 6036c5b6f04f45bc0800000000000000
+      internalID: -3795140238903581946
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      far_0: -7919386123332049619
+      Ball Dog_0: -3795140238903581946
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
